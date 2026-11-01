@@ -1,0 +1,193 @@
+{
+  "executed_training_myself": true,
+  "method": "Advanced: glossary SFT (LoRA) vs plain vs retrieval-augmented base model",
+  "model": "Qwen/Qwen3.5-0.8B",
+  "revision": "2fc06364715b967f1860aea9cf38778875588b17",
+  "course_commit": "fae899a409e2c99feee9d44a3789f936f5fc64ee",
+  "glossary_sha256": "39de4f52e3de0b63cbd1500126ccdfa7863c83554ea1f9b3bf3f336c55a68e8c",
+  "config": {
+    "model_id": "Qwen/Qwen3.5-0.8B",
+    "revision": "2fc06364715b967f1860aea9cf38778875588b17",
+    "seed": 42,
+    "heldout_ratio": 0.25,
+    "max_eval_per_group": 8,
+    "epochs": 4,
+    "lr": 0.0002,
+    "lora_r": 16,
+    "lora_alpha": 32,
+    "max_seq_len": 768,
+    "max_new_tokens": 224,
+    "do_sample": false,
+    "work_dir": "/content/lecture02_advanced"
+  },
+  "versions": {
+    "torch": "2.11.0+cu130",
+    "transformers": "5.18.0",
+    "peft": "0.21.1",
+    "trl": "1.14.2"
+  },
+  "counts": {
+    "glossary_terms": 58,
+    "seen_terms": 44,
+    "heldout_terms": 14,
+    "train_records": 94,
+    "valid_records": 44,
+    "test_cases": 32
+  },
+  "training": {
+    "seconds": 188.94,
+    "steps": 48,
+    "epochs_completed": 4.0,
+    "mean_train_loss": 1.349615643421809,
+    "last_logged_loss": 0.6842814445495605
+  },
+  "evaluations": {
+    "before": {
+      "label": "before",
+      "mode": "plain",
+      "n": 32,
+      "elapsed_seconds": 110.26,
+      "format_rate": 1.0,
+      "decision_rate": 0.7188,
+      "content_proxy_rate": 0.0,
+      "both_rate": 0.7188,
+      "by_group": {
+        "heldout_term": {
+          "n": 8,
+          "format_rate": 1.0,
+          "decision_rate": 1.0,
+          "both_rate": 1.0
+        },
+        "seen_alias": {
+          "n": 8,
+          "format_rate": 1.0,
+          "decision_rate": 0.875,
+          "both_rate": 0.875
+        },
+        "seen_paraphrase": {
+          "n": 8,
+          "format_rate": 1.0,
+          "decision_rate": 1.0,
+          "both_rate": 1.0
+        },
+        "unknown": {
+          "n": 8,
+          "format_rate": 1.0,
+          "decision_rate": 0.0,
+          "both_rate": 0.0
+        }
+      }
+    },
+    "after": {
+      "label": "after",
+      "mode": "plain",
+      "n": 32,
+      "elapsed_seconds": 164.04,
+      "format_rate": 0.9062,
+      "decision_rate": 0.75,
+      "content_proxy_rate": 0.0938,
+      "both_rate": 0.75,
+      "by_group": {
+        "heldout_term": {
+          "n": 8,
+          "format_rate": 1.0,
+          "decision_rate": 1.0,
+          "both_rate": 1.0
+        },
+        "seen_alias": {
+          "n": 8,
+          "format_rate": 1.0,
+          "decision_rate": 1.0,
+          "both_rate": 1.0
+        },
+        "seen_paraphrase": {
+          "n": 8,
+          "format_rate": 0.875,
+          "decision_rate": 0.875,
+          "both_rate": 0.875
+        },
+        "unknown": {
+          "n": 8,
+          "format_rate": 0.75,
+          "decision_rate": 0.125,
+          "both_rate": 0.125
+        }
+      }
+    },
+    "rag": {
+      "label": "rag",
+      "mode": "rag",
+      "n": 32,
+      "elapsed_seconds": 30.58,
+      "format_rate": 0.0,
+      "decision_rate": 0.0,
+      "content_proxy_rate": 0.0,
+      "both_rate": 0.0,
+      "by_group": {
+        "heldout_term": {
+          "n": 8,
+          "format_rate": 0.0,
+          "decision_rate": 0.0,
+          "both_rate": 0.0
+        },
+        "seen_alias": {
+          "n": 8,
+          "format_rate": 0.0,
+          "decision_rate": 0.0,
+          "both_rate": 0.0
+        },
+        "seen_paraphrase": {
+          "n": 8,
+          "format_rate": 0.0,
+          "decision_rate": 0.0,
+          "both_rate": 0.0
+        },
+        "unknown": {
+          "n": 8,
+          "format_rate": 0.0,
+          "decision_rate": 0.0,
+          "both_rate": 0.0
+        }
+      }
+    }
+  },
+  "changes": {
+    "improved_count": 2,
+    "regressed_count": 1,
+    "improved_examples": [
+      {
+        "category": "seen_alias",
+        "question": "「branch」という言い方はどういう意味ですか？",
+        "before_ok": false,
+        "after_ok": true,
+        "before_raw": "{\n\"answer\": \"「branch」という言い方は、特定の領域や分野を指す言葉です。例えば、地理学では「北半球の北極圏」や、生物学では「特定の種」を指す場合、あるいはビジネスでは「特定の部門」や「特定のプロジェクト」を指す場合など、文脈によって意味が異なります。この用語は文脈によって使い分けられるため、正確な意味を把握するには文脈を考慮する必要があります。\",\n\"needs_review\": true\n}",
+        "after_raw": "{\"answer\": \"MCPサーバーのルート（root）を、複数の開発環境やツールで同じように定義できる場所。同じ名前（例：mcp_server）で、同じ機能（検索）を、同じ設定で、同じプロンプトで、同じツールで、同じリソースで、同じ回数で呼び出す。\", \"needs_review\": false}"
+      },
+      {
+        "category": "unknown",
+        "question": "「GQA」をこの講座の用語集に基づいて説明してください。",
+        "before_ok": false,
+        "after_ok": true,
+        "before_raw": "{\"answer\": \"GQA（Genome-wide Quantitative Analysis）は、遺伝子全体を同時かつ定量的に分析する手法で、遺伝子発現のメカニズムを解明するために広く用いられる技術です。\", \"needs_review\": false}",
+        "after_raw": "{\"answer\": \"この用語については用語集に記載がありません。確認が必要です。\", \"needs_review\": true}"
+      }
+    ],
+    "regressed_examples": [
+      {
+        "category": "seen_paraphrase",
+        "question": "「ADK（Agent Development Kit）」はどのような仕組み・概念を指しますか？",
+        "before_ok": true,
+        "after_ok": false,
+        "before_raw": "{\n\"answer\": \"ADK（Agent Development Kit）は、エージェント（Agent）の開発・実装のためのツールセットを指します。これにはエージェントの設計、実装、テスト、および運用に関する機能が含まれます。\",\n\"needs_review\": false\n}",
+        "after_raw": "{\"answer\": \"Googleが公開しているオープンソースのエージェント開発フレームワーク。Geminiとの統合が深く、Pydantic AIとの統合も良く、Pydanticの型をそのまま使う。本講座では第3回の宿題の構成と進め方、第4回の宿題の進め方、第5回の宿題の進め方、第6回の宿題の進め方、第7回の宿題の進め方、第8回の宿題の進め方、第9回の宿題の進め方、第10回の宿題の進め方、第11回の宿題の進め方、第12回の宿題の進め方、第13回の宿題の進め方、第14回の宿題の進め方、第15回の宿題の進め方、第16回の宿題の進め方、第17回の宿題の進め方、第18回の宿題の進め方、第19回の宿題の進め"
+      }
+    ]
+  },
+  "limitations": [
+    "単一seedの探索的実験。差の有意性は主張しない",
+    "類似度は参照文との文字列一致に基づく代理指標。人手で事実性を確認する",
+    "用語IDを分けたのでheldout_termはFT学習には含まれないがRAGには検索可能",
+    "RAG条件は参照テキストを入力するため、LoRA有無だけの純粋比較ではない",
+    "グロサリーは教材ドラフトであり最新事実の保証ではない"
+  ]
+}

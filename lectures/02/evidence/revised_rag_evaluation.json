@@ -1,0 +1,593 @@
+{
+  "summary": {
+    "note": "NEW Colab experiment; these numbers are generated only by running this cell",
+    "n": 32,
+    "elapsed_seconds": 108.87,
+    "retrieval_id_correct": 32,
+    "new_llm_json_valid": 32,
+    "new_llm_source_exact": 4,
+    "fallback_used": 28,
+    "served_json_valid": 32,
+    "served_grounded_or_abstained": 32,
+    "mechanism": "source retrieval + generation + strict verifier + deterministic fallback",
+    "warning": "served_... score is system-level guaranteed by source copying; not an LLM score"
+  },
+  "rows": [
+    {
+      "category": "seen_paraphrase",
+      "question": "「ADK（Agent Development Kit）」はどのような仕組み・概念を指しますか？",
+      "expected_id": "adk",
+      "retrieved_id": "adk",
+      "retrieval_correct": true,
+      "llm_raw": "{\n\"answer\": \"Googleが開示したオープンソースのエージェント開発フレームワークです。\",\n\"needs_review\": false\n}",
+      "llm_json_valid": true,
+      "llm_json_failure_reason": "",
+      "llm_matches_source": false,
+      "fallback_used": true,
+      "served": {
+        "answer": "Googleが公開しているオープンソースのエージェント開発フレームワーク。Geminiとの統合が深い。2.0で1.x系から大きな変更が入っている。本講座では第3回の宿題の発展レベルで扱う。",
+        "needs_review": false
+      },
+      "served_json_valid": true,
+      "served_definition_equals_reference": true
+    },
+    {
+      "category": "seen_paraphrase",
+      "question": "「エージェントループ」はどのような仕組み・概念を指しますか？",
+      "expected_id": "agent-loop",
+      "retrieved_id": "agent-loop",
+      "retrieval_correct": true,
+      "llm_raw": "{\n  \"answer\": \"エージェントループは、モデルがツール呼び出しを返したら実行する→結果をモデルに戻す、をモデルが最終回答を返すまで繰り返す処理を指します。\",\n  \"needs_review\": false\n}",
+      "llm_json_valid": true,
+      "llm_json_failure_reason": "",
+      "llm_matches_source": false,
+      "fallback_used": true,
+      "served": {
+        "answer": "モデルに入力を渡す→モデルがツール呼び出しを返したら実行する→結果をモデルに戻す、をモデルが最終回答を返すまで繰り返す処理。1つの質問でLLMを複数回呼ぶため、時間・料金・レート制限への影響が大きい。",
+        "needs_review": false
+      },
+      "served_json_valid": true,
+      "served_definition_equals_reference": true
+    },
+    {
+      "category": "seen_paraphrase",
+      "question": "「AIエージェント」はどのような仕組み・概念を指しますか？",
+      "expected_id": "ai-agent",
+      "retrieved_id": "ai-agent",
+      "retrieval_correct": true,
+      "llm_raw": "{\n  \"answer\": \"LLMが自分で判断してツールを呼び出し、その結果を見てさらに次の行動を決める、というループで目的を達成するシステム。基本構造は「モデル＋ループ＋ツール」\",\n  \"needs_review\": false\n}",
+      "llm_json_valid": true,
+      "llm_json_failure_reason": "",
+      "llm_matches_source": false,
+      "fallback_used": true,
+      "served": {
+        "answer": "LLMが自分で判断してツールを呼び出し、その結果を見てさらに次の行動を決める、というループで目的を達成するシステム。基本構造は「モデル＋ループ＋ツール」。",
+        "needs_review": false
+      },
+      "served_json_valid": true,
+      "served_definition_equals_reference": true
+    },
+    {
+      "category": "seen_paraphrase",
+      "question": "「AIエンジニアリング」はどのような仕組み・概念を指しますか？",
+      "expected_id": "ai-engineering",
+      "retrieved_id": "ai-engineering",
+      "retrieval_correct": true,
+      "llm_raw": "{\n  \"answer\": \"AIエンジニアリングは、学習済みの基盤モデル（主にLLM）を部品として使い、実際に役立つアプリケーションやシステムを設計・構築・評価・運用する技術領域です。モデルを一から作ることより、モデルの選択、データやツールとの接続、評価と改善のサイクルを回すことに重心があります。\",\n  \"needs_review\": false\n}",
+      "llm_json_valid": true,
+      "llm_json_failure_reason": "",
+      "llm_matches_source": false,
+      "fallback_used": true,
+      "served": {
+        "answer": "学習済みの基盤モデル（主にLLM）を部品として使い、実際に役立つアプリケーションやシステムを設計・構築・評価・運用する技術領域。モデルを一から作ることより、モデルの選択、データやツールとの接続、評価と改善のサイクルを回すことに重心がある。",
+        "needs_review": false
+      },
+      "served_json_valid": true,
+      "served_definition_equals_reference": true
+    },
+    {
+      "category": "seen_paraphrase",
+      "question": "「answer.md」はどのような仕組み・概念を指しますか？",
+      "expected_id": "answer-md",
+      "retrieved_id": "answer-md",
+      "retrieval_correct": true,
+      "llm_raw": "{\n\"answer\": \"AIE2026 における answer.md は、各回の演習・宿題の結果を記録するファイルです。このファイルは lectures/NN/answer.md に保存され、取り組んだレベル・やったこと・結果・気づきを記入します。このファイルは作業ブランチから自分の fork の main へ PR を提出する際に用いられるため、作業ブランチから自分の fork の main へ PR を提出する際に用いられるファイルです。\",\n\"needs_review\": false\n}",
+      "llm_json_valid": true,
+      "llm_json_failure_reason": "",
+      "llm_matches_source": false,
+      "fallback_used": true,
+      "served": {
+        "answer": "AIE2026で各回の演習・宿題の結果を書くファイル。lectures/NN/answer.md にあり、取り組んだレベル・やったこと・結果・気づきを記入して、作業ブランチから自分のforkの main へPRを出して提出する。",
+        "needs_review": false
+      },
+      "served_json_valid": true,
+      "served_definition_equals_reference": true
+    },
+    {
+      "category": "seen_paraphrase",
+      "question": "「API」はどのような仕組み・概念を指しますか？",
+      "expected_id": "api",
+      "retrieved_id": "api",
+      "retrieval_correct": true,
+      "llm_raw": "{\n  \"answer\": \"プログラムから別のサービスの機能を呼び出すための窓口\",\n  \"needs_review\": false\n}",
+      "llm_json_valid": true,
+      "llm_json_failure_reason": "",
+      "llm_matches_source": false,
+      "fallback_used": true,
+      "served": {
+        "answer": "プログラムから別のサービスの機能を呼び出すための窓口。本講座ではGemini APIをPythonから呼び出してLLMを使う。",
+        "needs_review": false
+      },
+      "served_json_valid": true,
+      "served_definition_equals_reference": true
+    },
+    {
+      "category": "seen_paraphrase",
+      "question": "「APIキー」はどのような仕組み・概念を指しますか？",
+      "expected_id": "api-key",
+      "retrieved_id": "api-key",
+      "retrieval_correct": true,
+      "llm_raw": "{\n  \"answer\": \"API を呼び出す人を識別するための秘密の文字列\",\n  \"needs_review\": false\n}",
+      "llm_json_valid": true,
+      "llm_json_failure_reason": "",
+      "llm_matches_source": false,
+      "fallback_used": true,
+      "served": {
+        "answer": "APIを呼び出す人を識別するための秘密の文字列。漏れると他人に利用枠を使われるため、コードに直接書かない、コミットしない、チャットに貼らない。本講座ではCodespaces secretに登録し、環境変数 GEMINI_API_KEY として読み込む。",
+        "needs_review": false
+      },
+      "served_json_valid": true,
+      "served_definition_equals_reference": true
+    },
+    {
+      "category": "seen_paraphrase",
+      "question": "「ブランチ」はどのような仕組み・概念を指しますか？",
+      "expected_id": "branch",
+      "retrieved_id": "branch",
+      "retrieval_correct": true,
+      "llm_raw": "{\n  \"answer\": \"作業の流れを分けるための仕組み\",\n  \"needs_review\": false\n}",
+      "llm_json_valid": true,
+      "llm_json_failure_reason": "",
+      "llm_matches_source": false,
+      "fallback_used": true,
+      "served": {
+        "answer": "作業の流れを分けるための仕組み。main を壊さずに変更を試し、まとまったらPRで main に取り込む。本講座では回ごとに lec01 のような作業ブランチを作る。",
+        "needs_review": false
+      },
+      "served_json_valid": true,
+      "served_definition_equals_reference": true
+    },
+    {
+      "category": "seen_alias",
+      "question": "「Agent Development Kit」という言い方はどういう意味ですか？",
+      "expected_id": "adk",
+      "retrieved_id": "adk",
+      "retrieval_correct": true,
+      "llm_raw": "{\n\"answer\": \"Googleが開示しているオープンソースのエージェント開発フレームワークです。\",\n\"needs_review\": false\n}",
+      "llm_json_valid": true,
+      "llm_json_failure_reason": "",
+      "llm_matches_source": false,
+      "fallback_used": true,
+      "served": {
+        "answer": "Googleが公開しているオープンソースのエージェント開発フレームワーク。Geminiとの統合が深い。2.0で1.x系から大きな変更が入っている。本講座では第3回の宿題の発展レベルで扱う。",
+        "needs_review": false
+      },
+      "served_json_valid": true,
+      "served_definition_equals_reference": true
+    },
+    {
+      "category": "seen_alias",
+      "question": "「agent loop」という言い方はどういう意味ですか？",
+      "expected_id": "agent-loop",
+      "retrieved_id": "agent-loop",
+      "retrieval_correct": true,
+      "llm_raw": "{\n\"answer\": \"エージェントループは、モデルがツール呼び出しを返したら実行する→結果をモデルに戻す、をモデルが最終回答を返すまで繰り返す処理を指します。1つの質問でLLMを複数回呼ぶため、時間・料金・レート制限への影響が大きい。\",\n\"needs_review\": false\n}",
+      "llm_json_valid": true,
+      "llm_json_failure_reason": "",
+      "llm_matches_source": false,
+      "fallback_used": true,
+      "served": {
+        "answer": "モデルに入力を渡す→モデルがツール呼び出しを返したら実行する→結果をモデルに戻す、をモデルが最終回答を返すまで繰り返す処理。1つの質問でLLMを複数回呼ぶため、時間・料金・レート制限への影響が大きい。",
+        "needs_review": false
+      },
+      "served_json_valid": true,
+      "served_definition_equals_reference": true
+    },
+    {
+      "category": "seen_alias",
+      "question": "「エージェント」という言い方はどういう意味ですか？",
+      "expected_id": "ai-agent",
+      "retrieved_id": "ai-agent",
+      "retrieval_correct": true,
+      "llm_raw": "{\n\"answer\": \"AIエージェントは、LLM（大規模言語モデル）が自分で判断してツールを呼び出し、その結果を見てさらに次の行動を決める、というループで目的を達成するシステムです。基本構造は「モデル＋ループ＋ツール」です。\",\n\"needs_review\": false\n}",
+      "llm_json_valid": true,
+      "llm_json_failure_reason": "",
+      "llm_matches_source": false,
+      "fallback_used": true,
+      "served": {
+        "answer": "LLMが自分で判断してツールを呼び出し、その結果を見てさらに次の行動を決める、というループで目的を達成するシステム。基本構造は「モデル＋ループ＋ツール」。",
+        "needs_review": false
+      },
+      "served_json_valid": true,
+      "served_definition_equals_reference": true
+    },
+    {
+      "category": "seen_alias",
+      "question": "「AI Engineering」という言い方はどういう意味ですか？",
+      "expected_id": "ai-engineering",
+      "retrieved_id": "ai-engineering",
+      "retrieval_correct": true,
+      "llm_raw": "{\n\"answer\": \"AI Engineering は、学習済みの基盤モデル（主に LLM）を部品として使い、実際に役立つアプリケーションやシステムを設計・構築・評価・運用する技術領域です。モデルを一から作ることより、モデルの選択、データやツールとの接続、評価と改善のサイクルを回すことに重心があります。\",\n\"needs_review\": false\n}",
+      "llm_json_valid": true,
+      "llm_json_failure_reason": "",
+      "llm_matches_source": false,
+      "fallback_used": true,
+      "served": {
+        "answer": "学習済みの基盤モデル（主にLLM）を部品として使い、実際に役立つアプリケーションやシステムを設計・構築・評価・運用する技術領域。モデルを一から作ることより、モデルの選択、データやツールとの接続、評価と改善のサイクルを回すことに重心がある。",
+        "needs_review": false
+      },
+      "served_json_valid": true,
+      "served_definition_equals_reference": true
+    },
+    {
+      "category": "seen_alias",
+      "question": "「解答ファイル」という言い方はどういう意味ですか？",
+      "expected_id": "answer-md",
+      "retrieved_id": "answer-md",
+      "retrieval_correct": true,
+      "llm_raw": "{\n\"answer\": \"AIE2026 における「解答ファイル」という言い方は、各回の演習・宿題の結果を記録するファイル（answer.md）を指します。このファイルは lectures/NN/answer.md にあり、取り組んだレベル・やったこと・結果・気づきを記入して、作業ブランチから自分の fork の main へ PR を提出する際に用いられるものです。\",\n\"needs_review\": false\n}",
+      "llm_json_valid": true,
+      "llm_json_failure_reason": "",
+      "llm_matches_source": false,
+      "fallback_used": true,
+      "served": {
+        "answer": "AIE2026で各回の演習・宿題の結果を書くファイル。lectures/NN/answer.md にあり、取り組んだレベル・やったこと・結果・気づきを記入して、作業ブランチから自分のforkの main へPRを出して提出する。",
+        "needs_review": false
+      },
+      "served_json_valid": true,
+      "served_definition_equals_reference": true
+    },
+    {
+      "category": "seen_alias",
+      "question": "「Application Programming Interface」という言い方はどういう意味ですか？",
+      "expected_id": "api",
+      "retrieved_id": "api",
+      "retrieval_correct": true,
+      "llm_raw": "{\n\"answer\": \"Application Programming Interface (API) は、プログラムから別のサービスの機能を呼び出すための窓口（インターフェース）です。本講座では、Gemini API を Python から呼び出して LLM を利用する際、この API を使用します。\",\n\"needs_review\": false\n}",
+      "llm_json_valid": true,
+      "llm_json_failure_reason": "",
+      "llm_matches_source": false,
+      "fallback_used": true,
+      "served": {
+        "answer": "プログラムから別のサービスの機能を呼び出すための窓口。本講座ではGemini APIをPythonから呼び出してLLMを使う。",
+        "needs_review": false
+      },
+      "served_json_valid": true,
+      "served_definition_equals_reference": true
+    },
+    {
+      "category": "seen_alias",
+      "question": "「API key」という言い方はどういう意味ですか？",
+      "expected_id": "api-key",
+      "retrieved_id": "api-key",
+      "retrieval_correct": true,
+      "llm_raw": "{\n\"answer\": \"API を呼び出す人を識別するための秘密の文字列\",\n\"needs_review\": false\n}",
+      "llm_json_valid": true,
+      "llm_json_failure_reason": "",
+      "llm_matches_source": false,
+      "fallback_used": true,
+      "served": {
+        "answer": "APIを呼び出す人を識別するための秘密の文字列。漏れると他人に利用枠を使われるため、コードに直接書かない、コミットしない、チャットに貼らない。本講座ではCodespaces secretに登録し、環境変数 GEMINI_API_KEY として読み込む。",
+        "needs_review": false
+      },
+      "served_json_valid": true,
+      "served_definition_equals_reference": true
+    },
+    {
+      "category": "seen_alias",
+      "question": "「branch」という言い方はどういう意味ですか？",
+      "expected_id": "branch",
+      "retrieved_id": "branch",
+      "retrieval_correct": true,
+      "llm_raw": "{\n  \"answer\": \"branch は作業の流れを分けるための仕組みです。main を壊さずに変更を試し、まとまったら PR で main に取り込む。本講座では回ごとに lec01 のような作業ブランチを作る。\",\n  \"needs_review\": false\n}",
+      "llm_json_valid": true,
+      "llm_json_failure_reason": "",
+      "llm_matches_source": false,
+      "fallback_used": true,
+      "served": {
+        "answer": "作業の流れを分けるための仕組み。main を壊さずに変更を試し、まとまったらPRで main に取り込む。本講座では回ごとに lec01 のような作業ブランチを作る。",
+        "needs_review": false
+      },
+      "served_json_valid": true,
+      "served_definition_equals_reference": true
+    },
+    {
+      "category": "heldout_term",
+      "question": "「GitHub Codespaces」の意味を教えてください。",
+      "expected_id": "codespaces",
+      "retrieved_id": "codespaces",
+      "retrieval_correct": true,
+      "llm_raw": "{\n\"answer\": \"GitHub Codespaces は、GitHub が提供するクラウド上の開発環境です。ブラウザから VS Code を開き、repo に書かれた設定どおりの環境をすぐに使える。個人アカウントには毎月の無料枠があり、使わないときは停止しないと枠を消費し続ける。\",\n\"needs_review\": false\n}",
+      "llm_json_valid": true,
+      "llm_json_failure_reason": "",
+      "llm_matches_source": false,
+      "fallback_used": true,
+      "served": {
+        "answer": "GitHubが提供するクラウド上の開発環境。ブラウザからVS Codeを開き、repoに書かれた設定どおりの環境をすぐに使える。個人アカウントには毎月の無料枠があり、使わないときは停止しないと枠を消費し続ける。",
+        "needs_review": false
+      },
+      "served_json_valid": true,
+      "served_definition_equals_reference": true
+    },
+    {
+      "category": "heldout_term",
+      "question": "「コーディングエージェント」の意味を教えてください。",
+      "expected_id": "coding-agent",
+      "retrieved_id": "coding-agent",
+      "retrieval_correct": true,
+      "llm_raw": "{\n\"answer\": \"ファイルの読み書きやコマンド実行をツールとして使い、指示されたプログラミング作業を複数ステップで自律的に進めるAI。\",\n\"needs_review\": false\n}",
+      "llm_json_valid": true,
+      "llm_json_failure_reason": "",
+      "llm_matches_source": false,
+      "fallback_used": true,
+      "served": {
+        "answer": "ファイルの読み書きやコマンド実行をツールとして使い、指示されたプログラミング作業を複数ステップで自律的に進めるAI。Claude Code、Copilotのエージェントモード、Piなどがある。中身はLLM＋ループ＋ツールというAIエージェントの構造そのもの。",
+        "needs_review": false
+      },
+      "served_json_valid": true,
+      "served_definition_equals_reference": true
+    },
+    {
+      "category": "heldout_term",
+      "question": "「エポック」の意味を教えてください。",
+      "expected_id": "epoch",
+      "retrieved_id": "epoch",
+      "retrieval_correct": true,
+      "llm_raw": "{\n\"answer\": \"学習データ全体を1周学習することを1エポックと数える。回数を増やしすぎると過学習しやすい。\",\n\"needs_review\": false\n}",
+      "llm_json_valid": true,
+      "llm_json_failure_reason": "",
+      "llm_matches_source": true,
+      "fallback_used": false,
+      "served": {
+        "answer": "学習データ全体を1周学習することを1エポックと数える。回数を増やしすぎると過学習しやすい。",
+        "needs_review": false
+      },
+      "served_json_valid": true,
+      "served_definition_equals_reference": true
+    },
+    {
+      "category": "heldout_term",
+      "question": "「fetchサーバー」の意味を教えてください。",
+      "expected_id": "fetch-server",
+      "retrieved_id": "fetch-server",
+      "retrieval_correct": true,
+      "llm_raw": "{\n  \"answer\": \"fetchサーバーは、指定したURLのページを取得し、その結果をMarkdown形式で返す既製のMCPサーバーです。本講座では「設定ファイルに書くだけで外部ツールが増える」例として使うため、モデルが選んだURLに実際にアクセスするので、どこへ何を送るかは利用者が把握しておく必要があります。\",\n  \"needs_review\": false\n}",
+      "llm_json_valid": true,
+      "llm_json_failure_reason": "",
+      "llm_matches_source": false,
+      "fallback_used": true,
+      "served": {
+        "answer": "指定したURLのページを取得し、本文をMarkdownにして返す既製のMCPサーバー（Python製、uvx mcp-server-fetch で起動）。本講座では「設定ファイルに書くだけで外部ツールが増える」例として使う。モデルが選んだURLに実際にアクセスするので、どこへ何を送るかは利用者が把握しておく。",
+        "needs_review": false
+      },
+      "served_json_valid": true,
+      "served_definition_equals_reference": true
+    },
+    {
+      "category": "heldout_term",
+      "question": "「ファインチューニング」の意味を教えてください。",
+      "expected_id": "fine-tuning",
+      "retrieved_id": "fine-tuning",
+      "retrieval_correct": true,
+      "llm_raw": "{\n\"answer\": \"ファインチューニングは、事前学習済みモデルを、特定のタスクや形式に合ったデータで追加学習させること。出力の形式や口調、特定ドメインの振る舞いを身につけさせるのに向く。\",\n\"needs_review\": false\n}",
+      "llm_json_valid": true,
+      "llm_json_failure_reason": "",
+      "llm_matches_source": false,
+      "fallback_used": true,
+      "served": {
+        "answer": "事前学習済みモデルを、特定のタスクや形式に合ったデータで追加学習させること。出力の形式や口調、特定ドメインの振る舞いを身につけさせるのに向く。最新の事実を覚えさせる用途には、ツールやRAGで外部データを参照させるほうが向くことが多い。",
+        "needs_review": false
+      },
+      "served_json_valid": true,
+      "served_definition_equals_reference": true
+    },
+    {
+      "category": "heldout_term",
+      "question": "「ガードレール」の意味を教えてください。",
+      "expected_id": "guardrail",
+      "retrieved_id": "guardrail",
+      "retrieval_correct": true,
+      "llm_raw": "{\n\"answer\": \"エージェントが望ましくない行動や出力をしないように設ける制約や検査。指示文でのルール、ツールの権限を絞る、出力をチェックする、重要な操作の前に人の確認を挟む、などの方法がある。\",\n\"needs_review\": false\n}",
+      "llm_json_valid": true,
+      "llm_json_failure_reason": "",
+      "llm_matches_source": true,
+      "fallback_used": false,
+      "served": {
+        "answer": "エージェントが望ましくない行動や出力をしないように設ける制約や検査。指示文でのルール、ツールの権限を絞る、出力をチェックする、重要な操作の前に人の確認を挟む、などの方法がある。",
+        "needs_review": false
+      },
+      "served_json_valid": true,
+      "served_definition_equals_reference": true
+    },
+    {
+      "category": "heldout_term",
+      "question": "「LLM（大規模言語モデル）」の意味を教えてください。",
+      "expected_id": "llm",
+      "retrieved_id": "llm",
+      "retrieval_correct": true,
+      "llm_raw": "{\n\"answer\": \"大量のテキストで学習し、入力に続くトークンを予測することで文章を生成するモデル。質問応答、要約、コード生成など多くのタスクを、指示（プロンプト）を変えるだけでこなせる。\",\n\"needs_review\": false\n}",
+      "llm_json_valid": true,
+      "llm_json_failure_reason": "",
+      "llm_matches_source": true,
+      "fallback_used": false,
+      "served": {
+        "answer": "大量のテキストで学習し、入力に続くトークンを予測することで文章を生成するモデル。質問応答、要約、コード生成など多くのタスクを、指示（プロンプト）を変えるだけでこなせる。",
+        "needs_review": false
+      },
+      "served_json_valid": true,
+      "served_definition_equals_reference": true
+    },
+    {
+      "category": "heldout_term",
+      "question": "「ランク（LoRAのr）」の意味を教えてください。",
+      "expected_id": "lora-rank",
+      "retrieved_id": "lora-rank",
+      "retrieval_correct": true,
+      "llm_raw": "{\n\"answer\": \"LoRAで使う低ランク行列の大きさを決めるハイパーパラメータ。大きいほど表現力が上がるが、学習するパラメータとメモリも増える。\",\n\"needs_review\": false\n}",
+      "llm_json_valid": true,
+      "llm_json_failure_reason": "",
+      "llm_matches_source": true,
+      "fallback_used": false,
+      "served": {
+        "answer": "LoRAで使う低ランク行列の大きさを決めるハイパーパラメータ。大きいほど表現力が上がるが、学習するパラメータとメモリも増える。",
+        "needs_review": false
+      },
+      "served_json_valid": true,
+      "served_definition_equals_reference": true
+    },
+    {
+      "category": "unknown",
+      "question": "「Speculative Decoding」をこの講座の用語集に基づいて説明してください。",
+      "expected_id": null,
+      "retrieved_id": null,
+      "retrieval_correct": true,
+      "llm_raw": "{\n\"answer\": \"Speculative Decoding は、データ解析の一種で、特定のデータセットに対して、そのデータセットに含まれるすべてのデータが、そのデータセットに含まれるすべてのデータと一致するかどうかを確認する手法です。この手法は、データ解析の精度を高めるために、データセットに含まれるすべてのデータが、そのデータセットに含まれるすべてのデータと一致するかどうかを確認する手法です。\",\n\"needs_review\": false\n}",
+      "llm_json_valid": true,
+      "llm_json_failure_reason": "",
+      "llm_matches_source": false,
+      "fallback_used": true,
+      "served": {
+        "answer": "この用語は用語集に見つかりませんでした。確認が必要です。",
+        "needs_review": true
+      },
+      "served_json_valid": true,
+      "served_definition_equals_reference": true
+    },
+    {
+      "category": "unknown",
+      "question": "「KV cache」をこの講座の用語集に基づいて説明してください。",
+      "expected_id": null,
+      "retrieved_id": null,
+      "retrieval_correct": true,
+      "llm_raw": "{\n  \"answer\": \"KV cache（キー・値キャッシュ）は、大規模なデータ処理や機械学習モデルにおいて、計算コストを削減するために使用されるメモリ管理技術です。この用語集では、KV cache は主に「キー・値のペア（Key-Value Pair）」を高速なメモリ領域（通常は L1/L2 Cache または高速 RAM）に保存し、その後の計算処理や出力生成時に、必要な情報だけをこの高速領域に読み込み、計算を完了させることで、メモリアクセスの遅延を最小限に抑える仕組みとして説明されています。\",\n  \"needs_review\": false\n}",
+      "llm_json_valid": true,
+      "llm_json_failure_reason": "",
+      "llm_matches_source": false,
+      "fallback_used": true,
+      "served": {
+        "answer": "この用語は用語集に見つかりませんでした。確認が必要です。",
+        "needs_review": true
+      },
+      "served_json_valid": true,
+      "served_definition_equals_reference": true
+    },
+    {
+      "category": "unknown",
+      "question": "「Sparse Autoencoder」をこの講座の用語集に基づいて説明してください。",
+      "expected_id": null,
+      "retrieved_id": null,
+      "retrieval_correct": true,
+      "llm_raw": "{\n\"answer\": \"Sparse Autoencoder は、学習されたモデルの出力を「0」または「1」の二値化された形式で表現する手法です。このモデルは、学習された特徴を直接表現するのではなく、二値化された形式で表現することで、計算効率を向上させます。\",\n\"needs_review\": false\n}",
+      "llm_json_valid": true,
+      "llm_json_failure_reason": "",
+      "llm_matches_source": false,
+      "fallback_used": true,
+      "served": {
+        "answer": "この用語は用語集に見つかりませんでした。確認が必要です。",
+        "needs_review": true
+      },
+      "served_json_valid": true,
+      "served_definition_equals_reference": true
+    },
+    {
+      "category": "unknown",
+      "question": "「DPO」をこの講座の用語集に基づいて説明してください。",
+      "expected_id": null,
+      "retrieved_id": null,
+      "retrieval_correct": true,
+      "llm_raw": "{\n\"answer\": \"DPO（Deep Prompting）は、大規模言語モデル（LLM）の学習において、ユーザーが直接入力する質問やタスクに対して、その質問の文脈や背景知識をモデルに提供して学習する手法です。従来の学習では、モデルは単に質問を回答するだけでなく、その質問の文脈を理解して回答を生成する能力を養うことが求められます。DPO 手法は、モデルが「質問の文脈を考慮して回答を生成する」という能力を強化するために、ユーザーの質問を元に、その質問に関連する知識や背景情報を提供し、モデルに学習させるアプローチです。\",\n\"needs_review\": false\n}",
+      "llm_json_valid": true,
+      "llm_json_failure_reason": "",
+      "llm_matches_source": false,
+      "fallback_used": true,
+      "served": {
+        "answer": "この用語は用語集に見つかりませんでした。確認が必要です。",
+        "needs_review": true
+      },
+      "served_json_valid": true,
+      "served_definition_equals_reference": true
+    },
+    {
+      "category": "unknown",
+      "question": "「GRPO」をこの講座の用語集に基づいて説明してください。",
+      "expected_id": null,
+      "retrieved_id": null,
+      "retrieval_correct": true,
+      "llm_raw": "{\n\"answer\": \"GRPO は、Gross-Process-Output（総出力）を指す用語集の用語です。この用語は、特定の講座や文脈において、特定のプロセスの最終的な出力を指す一般的な用語として定義されていますが、その定義そのものがこの用語集の検索結果に含まれていません。\",\n\"needs_review\": true\n}",
+      "llm_json_valid": true,
+      "llm_json_failure_reason": "",
+      "llm_matches_source": false,
+      "fallback_used": true,
+      "served": {
+        "answer": "この用語は用語集に見つかりませんでした。確認が必要です。",
+        "needs_review": true
+      },
+      "served_json_valid": true,
+      "served_definition_equals_reference": true
+    },
+    {
+      "category": "unknown",
+      "question": "「Conformal Prediction」をこの講座の用語集に基づいて説明してください。",
+      "expected_id": null,
+      "retrieved_id": null,
+      "retrieval_correct": true,
+      "llm_raw": "{\n\"answer\": \"Conformal Prediction は、データセットの構造（例えば、データが線形に依存するかどうか）を考慮して、予測の誤差を最小化する手法です。このアプローチは、データセットのサイズや構造を事前に知覚し、その構造に基づいて予測を決定するアプローチです。\",\n\"needs_review\": false\n}",
+      "llm_json_valid": true,
+      "llm_json_failure_reason": "",
+      "llm_matches_source": false,
+      "fallback_used": true,
+      "served": {
+        "answer": "この用語は用語集に見つかりませんでした。確認が必要です。",
+        "needs_review": true
+      },
+      "served_json_valid": true,
+      "served_definition_equals_reference": true
+    },
+    {
+      "category": "unknown",
+      "question": "「GQA」をこの講座の用語集に基づいて説明してください。",
+      "expected_id": null,
+      "retrieved_id": null,
+      "retrieval_correct": true,
+      "llm_raw": "{\n\"answer\": \"GQA は、Genome Annotation Quality Assessment の略称で、遺伝子解析における品質評価の手法です。この用語集では、GQA は遺伝子解析における品質評価の手法として定義されています。\",\n\"needs_review\": false\n}",
+      "llm_json_valid": true,
+      "llm_json_failure_reason": "",
+      "llm_matches_source": false,
+      "fallback_used": true,
+      "served": {
+        "answer": "この用語は用語集に見つかりませんでした。確認が必要です。",
+        "needs_review": true
+      },
+      "served_json_valid": true,
+      "served_definition_equals_reference": true
+    },
+    {
+      "category": "unknown",
+      "question": "「RLAIF」をこの講座の用語集に基づいて説明してください。",
+      "expected_id": null,
+      "retrieved_id": null,
+      "retrieval_correct": true,
+      "llm_raw": "{\n\"answer\": \"RLAIF は、Rapid Learning Algorithm for Image Feature Extraction の略称で、画像認識における特徴抽出のアルゴリズムです。この用語集では、RLAIF は画像認識において、画像の特定の特徴を高速かつ効率的に抽出する手法として定義されています。\",\n\"needs_review\": false\n}",
+      "llm_json_valid": true,
+      "llm_json_failure_reason": "",
+      "llm_matches_source": false,
+      "fallback_used": true,
+      "served": {
+        "answer": "この用語は用語集に見つかりませんでした。確認が必要です。",
+        "needs_review": true
+      },
+      "served_json_valid": true,
+      "served_definition_equals_reference": true
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "source": "uploaded 2026-11-02 audit ZIP; no new model inference",
+  "run_ids": "notebook training 190.5s vs archived json 184.68s discrepancy preserved",
+  "original": {
+    "before": {
+      "n": 32,
+      "format_valid": 32,
+      "decision_correct_under_original_rule": 23,
+      "content_proxy": 0,
+      "both_equals_decision": true
+    },
+    "after": {
+      "n": 32,
+      "format_valid": 29,
+      "decision_correct_under_original_rule": 24,
+      "content_proxy": 3,
+      "both_equals_decision": true
+    },
+    "rag": {
+      "n": 32,
+      "format_valid": 0,
+      "decision_correct_under_original_rule": 0,
+      "content_proxy": 0,
+      "both_equals_decision": true
+    }
+  },
+  "retrieval_hits_correct": 32,
+  "rag_llm_raw_valid_json": 0,
+  "reference_only_replay_schema_valid": 32,
+  "reference_only_replay_definition_match": 24,
+  "reference_only_replay_appropriate_abstention": 8,
+  "labels": "AI-assisted preliminary reading; NOT independent human annotation",
+  "semantic_first_pass_24_terms": {
+    "before": {
+      "partial": 9,
+      "incorrect": 9,
+      "correct": 6
+    },
+    "after": {
+      "invalid": 1,
+      "partial": 10,
+      "correct": 3,
+      "incorrect": 10
+    }
+  },
+  "caveats": [
+    "original decision/both metric is NOT semantic factual accuracy",
+    "unknown group contains real ML terms not in glossary; no source was passed to plain model",
+    "source-only replay uses cached evaluated retrieval outputs; not a blind benchmark",
+    "underlying generator after LoRA was not run again",
+    "human second-pass adjudication not performed",
+    "the saved notebook and archived JSON report different runtimes"
+  ]
+}
