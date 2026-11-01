@@ -1,0 +1,42 @@
+[
+  {
+    "question": "事前学習の重みを固定し、小さな行列の積だけを学習する手法は？",
+    "gold_id": "lora",
+    "retrieved_id": null
+  },
+  {
+    "question": "LLMがツールを呼び出し、実行結果をモデルに返す処理の繰り返しは？",
+    "gold_id": "agent-loop",
+    "retrieved_id": null
+  },
+  {
+    "question": "外部サービスを呼び出すとき、チャットやGitに貼ってはいけない秘密文字列は？",
+    "gold_id": "api-key",
+    "retrieved_id": null
+  },
+  {
+    "question": "モデルが一度の生成で読み書きできるトークン数の上限は？",
+    "gold_id": "context-window",
+    "retrieved_id": null
+  },
+  {
+    "question": "作業ブランチの変更をメインに取り込むためにGitHubでレビュー依頼する仕組みは？",
+    "gold_id": "pull-request",
+    "retrieved_id": null
+  },
+  {
+    "question": "LLMが実在しない事柄をもっともらしく断言してしまう現象は？",
+    "gold_id": "hallucination",
+    "retrieved_id": null
+  },
+  {
+    "question": "未知の外部文書がモデルに無視すべき命令を埋め込み、振る舞いを変える攻撃には何の対策が必要？",
+    "gold_id": "guardrail",
+    "retrieved_id": null
+  },
+  {
+    "question": "学習データ全体を1周することは何と数える？",
+    "gold_id": "epoch",
+    "retrieved_id": null
+  }
+]
