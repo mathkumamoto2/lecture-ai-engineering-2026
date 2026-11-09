@@ -1,0 +1,547 @@
+{
+  "schema_version": 2,
+  "created_utc": "2026-11-09T02:53:25+00:00",
+  "updated_utc": "2026-11-09T03:20:49+00:00",
+  "plan": {
+    "mode": "quick",
+    "repeat": 1,
+    "case_ids": [
+      "course_levels",
+      "lora_qlora",
+      "quiz02",
+      "lecture03"
+    ],
+    "alternating_order": true,
+    "pause_seconds": 12.0
+  },
+  "model": "gemini-3.5-flash-lite",
+  "same_instructions": true,
+  "same_python_tools": true,
+  "registered_tools": [
+    "search_glossary",
+    "get_lecture_summary",
+    "make_quiz"
+  ],
+  "instructions_sha256": "bdd49f441b34eb23f2fae3e10eed6cfe312d87b2b80fd1cc1d6f5c47b3ae22de",
+  "glossary_sha256": "39de4f52e3de0b63cbd1500126ccdfa7863c83554ea1f9b3bf3f336c55a68e8c",
+  "versions": {
+    "google-adk": "2.14.0",
+    "pydantic-ai-slim": "2.57.0",
+    "pydantic-ai": null,
+    "google-genai": "2.31.0"
+  },
+  "python_version": "3.12.16",
+  "records": [
+    {
+      "case_id": "course_levels",
+      "category": "course_grounding",
+      "repeat": 1,
+      "question": "AIE2026の講座の宿題にある『3レベル』とは何ですか？",
+      "required_tools": [
+        "search_glossary"
+      ],
+      "check_terms": [
+        "基礎",
+        "実装",
+        "発展"
+      ],
+      "order": [
+        "pydantic_ai",
+        "google_adk"
+      ],
+      "pydantic_ai": {
+        "ok": true,
+        "seconds": 1.866,
+        "answer": "AIエンジニアリング講座（AIE2026）における「3レベル」とは、**宿題の構成の3段階**のことです。\n\n宿題には以下の3つのレベルが用意されており、受講者はご自身の状況に合わせて**どれか1つ**に取り組めばその回の宿題完了となります。原則として採点はありません。\n\n1. **基礎**：講義内容の確認\n2. **実装**：自分でコードを書く\n3. **発展**：調査や試行（応用的なチャレンジ）\n\n関連する回：第1回",
+        "tool_calls": [
+          {
+            "tool": "search_glossary",
+            "args": {
+              "query": "3レベル"
+            }
+          }
+        ],
+        "tool_returns": [
+          {
+            "tool": "search_glossary",
+            "preview": "[{\"term\": \"宿題の3レベル\", \"lecture\": 1, \"definition\": \"AIE2026の宿題の構成。「基礎（講義内容の確認）」「実装（自分でコードを書く）」「発展（調査や試行）」の3段階があり、どれか1つに取り組めばその回の宿題は完了。原則として採点はしない。\", \"related\": [\"answer-md\"]}]"
+          }
+        ],
+        "trace": [
+          {
+            "kind": "tool_call",
+            "tool": "search_glossary",
+            "args": {
+              "query": "3レベル"
+            }
+          },
+          {
+            "kind": "tool_return",
+            "tool": "search_glossary",
+            "preview": "[{\"term\": \"宿題の3レベル\", \"lecture\": 1, \"definition\": \"AIE2026の宿題の構成。「基礎（講義内容の確認）」「実装（自分でコードを書く）」「発展（調査や試行）」の3段階があり、どれか1つに取り組めばその回の宿題は完了。原則として採点はしない。\", \"related\": [\"answer-md\"]}]"
+          }
+        ],
+        "llm_requests": 2,
+        "evaluation": {
+          "tool_coverage": true,
+          "phrase_check": true,
+          "needs_human_review": true
+        },
+        "retry_count": 0,
+        "retry_errors": []
+      },
+      "google_adk": {
+        "ok": true,
+        "seconds": 3.065,
+        "answer": "AIE2026の宿題における『3レベル』とは、宿題の難易度や取り組み方の構成のことです。\n\n具体的には、以下の3つの段階に分かれています。\n\n1. **基礎**：講義内容の確認\n2. **実装**：自分でコードを書く\n3. **発展**：調査や試行\n\nこの3つのうち、**どれか1つ**に取り組めばその回の宿題は完了となります。なお、原則として宿題の採点はありません。\n\nもし宿題の内容でお困りの場合は、答えそのものではなく考え方のヒントをお伝えしますので、どの回のどのような部分で悩んでいるか教えてくださいね。\n\n関連する回：第1回",
+        "tool_calls": [
+          {
+            "tool": "search_glossary",
+            "args": {
+              "query": "3レベル"
+            }
+          }
+        ],
+        "tool_returns": [
+          {
+            "tool": "search_glossary",
+            "preview": "{'result': '[{\"term\": \"宿題の3レベル\", \"lecture\": 1, \"definition\": \"AIE2026の宿題の構成。「基礎（講義内容の確認）」「実装（自分でコードを書く）」「発展（調査や試行）」の3段階があり、どれか1つに取り組めばその回の宿題は完了。原則として採点はしない。\", \"related\": [\"answer-md\"]}]'}"
+          }
+        ],
+        "trace": [
+          {
+            "kind": "tool_call",
+            "tool": "search_glossary",
+            "args": {
+              "query": "3レベル"
+            }
+          },
+          {
+            "kind": "tool_return",
+            "tool": "search_glossary",
+            "preview": "{'result': '[{\"term\": \"宿題の3レベル\", \"lecture\": 1, \"definition\": \"AIE2026の宿題の構成。「基礎（講義内容の確認）」「実装（自分でコードを書く）」「発展（調査や試行）」の3段階があり、どれか1つに取り組めばその回の宿題は完了。原則として採点はしない。\", \"related\": [\"answer-md\"]}]'}"
+          }
+        ],
+        "usage_events": 2,
+        "token_totals_event_sum": {
+          "prompt_tokens": 1179,
+          "candidate_tokens": 171,
+          "total_tokens": 1350
+        },
+        "usage_note": "ADK usage_events is not proven equivalent to Pydantic AI requests.",
+        "evaluation": {
+          "tool_coverage": true,
+          "phrase_check": true,
+          "needs_human_review": true
+        }
+      }
+    },
+    {
+      "case_id": "lora_qlora",
+      "category": "multi_term",
+      "repeat": 1,
+      "question": "LoRAとQLoRAの違いを説明してください。",
+      "required_tools": [
+        "search_glossary"
+      ],
+      "check_terms": [
+        "LoRA",
+        "QLoRA"
+      ],
+      "order": [
+        "google_adk",
+        "pydantic_ai"
+      ],
+      "google_adk": {
+        "ok": true,
+        "seconds": 1.683,
+        "answer": "用語集によると、LoRAとQLoRAの違いは以下の通りです。\n\n* **LoRA**: 事前学習済みの重みを固定したまま、重みの更新分を2つの小さな低ランク行列の積で表し、その小さな行列だけを学習するPEFT手法です。学習パラメータや保存ファイルを減らすことができます。\n* **QLoRA**: ベースモデルの重みを4ビットなどに量子化してメモリを大幅に節約したうえで、LoRAによる学習を行う手法です。これにより、より大きなモデルを小さなGPUでも扱えるようにします。\n\n関係する回：第2回",
+        "tool_calls": [
+          {
+            "tool": "search_glossary",
+            "args": {
+              "query": "LoRA"
+            }
+          },
+          {
+            "tool": "search_glossary",
+            "args": {
+              "query": "QLoRA"
+            }
+          }
+        ],
+        "tool_returns": [
+          {
+            "tool": "search_glossary",
+            "preview": "{'result': '[{\"term\": \"LoRA\", \"lecture\": 2, \"definition\": \"事前学習済みの重みは固定したまま、重みの更新分を2つの小さな行列の積（低ランク行列）で表し、その小さな行列だけを学習するPEFT手法。学習するパラメータが少なく、学習結果（アダプタ）も小さいファイルで保存できる。本講座の第2回演習ではLoRAを扱う。\", \"related\": [\"peft\", \"lora-rank\", \"qlora\"]}, {\"term\": \"ランク（LoRAのr）\", \"lecture\": 2, \"definition\": \"LoRAで使う低ランク行列の大きさを決めるハイパーパラメータ。大きいほど表現力が上がるが、学習するパラメータとメモリも増える。\", "
+          },
+          {
+            "tool": "search_glossary",
+            "preview": "{'result': '[{\"term\": \"QLoRA\", \"lecture\": 2, \"definition\": \"ベースモデルの重みを4ビットなどに量子化してメモリを節約したうえで、LoRAで学習する手法。より大きなモデルを小さなGPUで扱える。本講座の第2回演習ではモデルがGPUに載るためLoRAで学習し、4ビットで読み込んだときのメモリと出力の違いを発展で比べる。\", \"related\": [\"lora\", \"quantization\"]}, {\"term\": \"LoRA\", \"lecture\": 2, \"definition\": \"事前学習済みの重みは固定したまま、重みの更新分を2つの小さな行列の積（低ランク行列）で表し、その小さな行列だけを学習するPEFT手法。学習するパラメー"
+          }
+        ],
+        "trace": [
+          {
+            "kind": "tool_call",
+            "tool": "search_glossary",
+            "args": {
+              "query": "LoRA"
+            }
+          },
+          {
+            "kind": "tool_call",
+            "tool": "search_glossary",
+            "args": {
+              "query": "QLoRA"
+            }
+          },
+          {
+            "kind": "tool_return",
+            "tool": "search_glossary",
+            "preview": "{'result': '[{\"term\": \"LoRA\", \"lecture\": 2, \"definition\": \"事前学習済みの重みは固定したまま、重みの更新分を2つの小さな行列の積（低ランク行列）で表し、その小さな行列だけを学習するPEFT手法。学習するパラメータが少なく、学習結果（アダプタ）も小さいファイルで保存できる。本講座の第2回演習ではLoRAを扱う。\", \"related\": [\"peft\", \"lora-rank\", \"qlora\"]}, {\"term\": \"ランク（LoRAのr）\", \"lecture\": 2, \"definition\": \"LoRAで使う低ランク行列の大きさを決めるハイパーパラメータ。大きいほど表現力が上がるが、学習するパラメータとメモリも増える。\", "
+          },
+          {
+            "kind": "tool_return",
+            "tool": "search_glossary",
+            "preview": "{'result': '[{\"term\": \"QLoRA\", \"lecture\": 2, \"definition\": \"ベースモデルの重みを4ビットなどに量子化してメモリを節約したうえで、LoRAで学習する手法。より大きなモデルを小さなGPUで扱える。本講座の第2回演習ではモデルがGPUに載るためLoRAで学習し、4ビットで読み込んだときのメモリと出力の違いを発展で比べる。\", \"related\": [\"lora\", \"quantization\"]}, {\"term\": \"LoRA\", \"lecture\": 2, \"definition\": \"事前学習済みの重みは固定したまま、重みの更新分を2つの小さな行列の積（低ランク行列）で表し、その小さな行列だけを学習するPEFT手法。学習するパラメー"
+          }
+        ],
+        "usage_events": 2,
+        "token_totals_event_sum": {
+          "prompt_tokens": 1594,
+          "candidate_tokens": 166,
+          "total_tokens": 1760
+        },
+        "usage_note": "ADK usage_events is not proven equivalent to Pydantic AI requests.",
+        "evaluation": {
+          "tool_coverage": true,
+          "phrase_check": true,
+          "needs_human_review": true
+        }
+      },
+      "pydantic_ai": {
+        "ok": true,
+        "seconds": 1.907,
+        "answer": "LoRAとQLoRAの主な違いは、**ベースモデルの重みをそのまま使うか、量子化してメモリを削減するか**という点にあります。\n\n* **LoRA（Low-Rank Adaptation）**\n  事前学習済みの重みを固定したまま、重みの更新分を2つの小さな低ランク行列で近似し、その小さな行列（アダプタ）だけを学習するPEFT（Parameter-Efficient Fine-Tuning）手法です。学習パラメータや保存ファイルを大幅に削減できます。\n* **QLoRA（Quantized LoRA）**\n  LoRAの仕組みをベースにしつつ、**ベースモデルの重みを4ビットなどに量子化（Quantization）して読み込む**手法です。これにより、メモリ消費を劇的に抑えながら、大きなモデルでも小さなGPU環境で効率よくファインチューニングを行えるようにします。\n\n関係する回：第2回",
+        "tool_calls": [
+          {
+            "tool": "search_glossary",
+            "args": {
+              "query": "LoRA"
+            }
+          },
+          {
+            "tool": "search_glossary",
+            "args": {
+              "query": "QLoRA"
+            }
+          }
+        ],
+        "tool_returns": [
+          {
+            "tool": "search_glossary",
+            "preview": "[{\"term\": \"LoRA\", \"lecture\": 2, \"definition\": \"事前学習済みの重みは固定したまま、重みの更新分を2つの小さな行列の積（低ランク行列）で表し、その小さな行列だけを学習するPEFT手法。学習するパラメータが少なく、学習結果（アダプタ）も小さいファイルで保存できる。本講座の第2回演習ではLoRAを扱う。\", \"related\": [\"peft\", \"lora-rank\", \"qlora\"]}, {\"term\": \"ランク（LoRAのr）\", \"lecture\": 2, \"definition\": \"LoRAで使う低ランク行列の大きさを決めるハイパーパラメータ。大きいほど表現力が上がるが、学習するパラメータとメモリも増える。\", \"related\": ["
+          },
+          {
+            "tool": "search_glossary",
+            "preview": "[{\"term\": \"QLoRA\", \"lecture\": 2, \"definition\": \"ベースモデルの重みを4ビットなどに量子化してメモリを節約したうえで、LoRAで学習する手法。より大きなモデルを小さなGPUで扱える。本講座の第2回演習ではモデルがGPUに載るためLoRAで学習し、4ビットで読み込んだときのメモリと出力の違いを発展で比べる。\", \"related\": [\"lora\", \"quantization\"]}, {\"term\": \"LoRA\", \"lecture\": 2, \"definition\": \"事前学習済みの重みは固定したまま、重みの更新分を2つの小さな行列の積（低ランク行列）で表し、その小さな行列だけを学習するPEFT手法。学習するパラメータが少なく、学習結果（ア"
+          }
+        ],
+        "trace": [
+          {
+            "kind": "tool_call",
+            "tool": "search_glossary",
+            "args": {
+              "query": "LoRA"
+            }
+          },
+          {
+            "kind": "tool_call",
+            "tool": "search_glossary",
+            "args": {
+              "query": "QLoRA"
+            }
+          },
+          {
+            "kind": "tool_return",
+            "tool": "search_glossary",
+            "preview": "[{\"term\": \"LoRA\", \"lecture\": 2, \"definition\": \"事前学習済みの重みは固定したまま、重みの更新分を2つの小さな行列の積（低ランク行列）で表し、その小さな行列だけを学習するPEFT手法。学習するパラメータが少なく、学習結果（アダプタ）も小さいファイルで保存できる。本講座の第2回演習ではLoRAを扱う。\", \"related\": [\"peft\", \"lora-rank\", \"qlora\"]}, {\"term\": \"ランク（LoRAのr）\", \"lecture\": 2, \"definition\": \"LoRAで使う低ランク行列の大きさを決めるハイパーパラメータ。大きいほど表現力が上がるが、学習するパラメータとメモリも増える。\", \"related\": ["
+          },
+          {
+            "kind": "tool_return",
+            "tool": "search_glossary",
+            "preview": "[{\"term\": \"QLoRA\", \"lecture\": 2, \"definition\": \"ベースモデルの重みを4ビットなどに量子化してメモリを節約したうえで、LoRAで学習する手法。より大きなモデルを小さなGPUで扱える。本講座の第2回演習ではモデルがGPUに載るためLoRAで学習し、4ビットで読み込んだときのメモリと出力の違いを発展で比べる。\", \"related\": [\"lora\", \"quantization\"]}, {\"term\": \"LoRA\", \"lecture\": 2, \"definition\": \"事前学習済みの重みは固定したまま、重みの更新分を2つの小さな行列の積（低ランク行列）で表し、その小さな行列だけを学習するPEFT手法。学習するパラメータが少なく、学習結果（ア"
+          }
+        ],
+        "llm_requests": 2,
+        "evaluation": {
+          "tool_coverage": true,
+          "phrase_check": true,
+          "needs_human_review": true
+        },
+        "retry_count": 0,
+        "retry_errors": []
+      }
+    },
+    {
+      "case_id": "quiz02",
+      "category": "tool_selection",
+      "repeat": 1,
+      "question": "第2回の内容から確認問題を1問出してください。",
+      "required_tools": [
+        "make_quiz"
+      ],
+      "check_terms": [],
+      "order": [
+        "pydantic_ai",
+        "google_adk"
+      ],
+      "pydantic_ai": {
+        "ok": true,
+        "seconds": 1.659,
+        "answer": "第2回の内容から確認問題をお出しします！\n\n**【確認問題】**\n「エポック」とは何ですか？\n\n---\n回答のヒント：モデルの学習において、データ全体をどれくらい見せるかという単位に関する言葉です。考えてみてください！\n\n関係する回：第2回",
+        "tool_calls": [
+          {
+            "tool": "make_quiz",
+            "args": {
+              "lecture": 2
+            }
+          }
+        ],
+        "tool_returns": [
+          {
+            "tool": "make_quiz",
+            "preview": "{\"question\": \"「エポック」とは何ですか？\", \"answer\": \"学習データ全体を1周学習することを1エポックと数える。回数を増やしすぎると過学習しやすい。\"}"
+          }
+        ],
+        "trace": [
+          {
+            "kind": "tool_call",
+            "tool": "make_quiz",
+            "args": {
+              "lecture": 2
+            }
+          },
+          {
+            "kind": "tool_return",
+            "tool": "make_quiz",
+            "preview": "{\"question\": \"「エポック」とは何ですか？\", \"answer\": \"学習データ全体を1周学習することを1エポックと数える。回数を増やしすぎると過学習しやすい。\"}"
+          }
+        ],
+        "llm_requests": 2,
+        "evaluation": {
+          "tool_coverage": true,
+          "phrase_check": null,
+          "needs_human_review": true
+        },
+        "retry_count": 0,
+        "retry_errors": []
+      },
+      "google_adk": {
+        "ok": true,
+        "seconds": 2.048,
+        "answer": "第2回の内容から確認問題をお出しします！\n\n**【確認問題】**\nQ. 「エポック」とは何ですか？\n\n考えてみてくださいね。分からなければヒントを出します！\n\n（関連する回：第2回）",
+        "tool_calls": [
+          {
+            "tool": "make_quiz",
+            "args": {
+              "lecture": 2
+            }
+          }
+        ],
+        "tool_returns": [
+          {
+            "tool": "make_quiz",
+            "preview": "{'result': '{\"question\": \"「エポック」とは何ですか？\", \"answer\": \"学習データ全体を1周学習することを1エポックと数える。回数を増やしすぎると過学習しやすい。\"}'}"
+          }
+        ],
+        "trace": [
+          {
+            "kind": "tool_call",
+            "tool": "make_quiz",
+            "args": {
+              "lecture": 2
+            }
+          },
+          {
+            "kind": "tool_return",
+            "tool": "make_quiz",
+            "preview": "{'result': '{\"question\": \"「エポック」とは何ですか？\", \"answer\": \"学習データ全体を1周学習することを1エポックと数える。回数を増やしすぎると過学習しやすい。\"}'}"
+          }
+        ],
+        "usage_events": 2,
+        "token_totals_event_sum": {
+          "prompt_tokens": 1112,
+          "candidate_tokens": 68,
+          "total_tokens": 1180
+        },
+        "usage_note": "ADK usage_events is not proven equivalent to Pydantic AI requests.",
+        "evaluation": {
+          "tool_coverage": true,
+          "phrase_check": null,
+          "needs_human_review": true
+        },
+        "retry_count": 0,
+        "retry_errors": []
+      }
+    },
+    {
+      "case_id": "lecture03",
+      "category": "lecture_summary",
+      "repeat": 1,
+      "question": "第3回では何を学びますか？",
+      "required_tools": [
+        "get_lecture_summary"
+      ],
+      "check_terms": [
+        "エージェント"
+      ],
+      "order": [
+        "google_adk",
+        "pydantic_ai"
+      ],
+      "pydantic_ai": {
+        "ok": true,
+        "seconds": 2.189,
+        "answer": "第3回では、「AIエージェント」をテーマに以下の内容を学びます。\n\n- **AIエージェントの基本構造**：「モデル ＋ ループ ＋ ツール」の組み合わせにより、LLMが自律的にタスクを遂行する仕組みの理解\n- **ツールとエージェントループ**：LLMがツールを選択・実行し、その結果をもとに次の行動を決定する仕組みやコストの考慮\n- **ハーネスとフレームワーク**：PiやPydantic AIなどを活用したエージェントの実装と、テスト用モデル（TestModel）を使った動作確認\n- **安全な運用**：ガードレールやHuman-in-the-loop（人の確認を挟む仕組み）の重要性\n\n講座を通じて、実際にツールを使う学習支援エージェントの構築や、ツールの追加・検証を体験します。\n\n関連する回：第3回",
+        "tool_calls": [
+          {
+            "tool": "get_lecture_summary",
+            "args": {
+              "lecture": 3
+            }
+          }
+        ],
+        "tool_returns": [
+          {
+            "tool": "get_lecture_summary",
+            "preview": "# 第3回 AIエージェント\n\n## この回のねらい\n\n- AIエージェントの基本構造が「モデル＋ループ＋ツール」であることを理解する\n- Pydantic AIで、ツールを使う学習支援エージェントを自分で作り、動かす\n\n## 要点\n\n1. **エージェントとは**：LLMがツールを呼び出し、結果を見て次の行動を決めるループで目的を達成するシステム。\n2. **ツール**：モデルはツールの名前・説明文・引数の型を見て呼び出しを依頼し、実行はプログラム側が行う。説明文の書き方で挙動が変わる。\n3. **エージェントループのコスト**：1つの質問でLLMを複数回呼ぶため、応答時間・料金・レート制限への影響が大きい。\n4. **ハーネス**：Claude CodeやPiのような、ループ・ツール・U"
+          }
+        ],
+        "trace": [
+          {
+            "kind": "tool_call",
+            "tool": "get_lecture_summary",
+            "args": {
+              "lecture": 3
+            }
+          },
+          {
+            "kind": "tool_return",
+            "tool": "get_lecture_summary",
+            "preview": "# 第3回 AIエージェント\n\n## この回のねらい\n\n- AIエージェントの基本構造が「モデル＋ループ＋ツール」であることを理解する\n- Pydantic AIで、ツールを使う学習支援エージェントを自分で作り、動かす\n\n## 要点\n\n1. **エージェントとは**：LLMがツールを呼び出し、結果を見て次の行動を決めるループで目的を達成するシステム。\n2. **ツール**：モデルはツールの名前・説明文・引数の型を見て呼び出しを依頼し、実行はプログラム側が行う。説明文の書き方で挙動が変わる。\n3. **エージェントループのコスト**：1つの質問でLLMを複数回呼ぶため、応答時間・料金・レート制限への影響が大きい。\n4. **ハーネス**：Claude CodeやPiのような、ループ・ツール・U"
+          }
+        ],
+        "llm_requests": 2,
+        "evaluation": {
+          "tool_coverage": true,
+          "phrase_check": true,
+          "needs_human_review": true
+        },
+        "retry_count": 0,
+        "retry_errors": []
+      },
+      "google_adk": {
+        "ok": true,
+        "seconds": 2.108,
+        "answer": "第3回「AIエージェント」では、以下の内容を学びます。\n\n- **AIエージェントの基本構造**：「モデル＋ループ＋ツール」の仕組みを理解し、Pydantic AIを使ってツールを使う学習支援エージェントを作り動かすこと。\n- **主な学習ポイント**：\n  - エージェントループ（LLMがツールを呼び出し、結果を見て次の行動を決める仕組み）と、それに伴うコスト（応答時間や料金への影響）\n  - ツールの役割と説明文（プロンプト）の重要性\n  - ハーネスの概念（PiやClaude Codeなど、ループ・ツール・UIでLLMを包むプログラム）\n  - Pydantic AIなどのフレームワークと、TestModelを使ったテスト手法\n  - ガードレールとHuman-in-the-loop（人の確認を挟む仕組み）\n\n（関係する回：第3回）",
+        "tool_calls": [
+          {
+            "tool": "get_lecture_summary",
+            "args": {
+              "lecture": 3
+            }
+          }
+        ],
+        "tool_returns": [
+          {
+            "tool": "get_lecture_summary",
+            "preview": "{'result': '# 第3回 AIエージェント\\n\\n## この回のねらい\\n\\n- AIエージェントの基本構造が「モデル＋ループ＋ツール」であることを理解する\\n- Pydantic AIで、ツールを使う学習支援エージェントを自分で作り、動かす\\n\\n## 要点\\n\\n1. **エージェントとは**：LLMがツールを呼び出し、結果を見て次の行動を決めるループで目的を達成するシステム。\\n2. **ツール**：モデルはツールの名前・説明文・引数の型を見て呼び出しを依頼し、実行はプログラム側が行う。説明文の書き方で挙動が変わる。\\n3. **エージェントループのコスト**：1つの質問でLLMを複数回呼ぶため、応答時間・料金・レート制限への影響が大きい。\\n4. **ハーネス**：Clau"
+          }
+        ],
+        "trace": [
+          {
+            "kind": "tool_call",
+            "tool": "get_lecture_summary",
+            "args": {
+              "lecture": 3
+            }
+          },
+          {
+            "kind": "tool_return",
+            "tool": "get_lecture_summary",
+            "preview": "{'result': '# 第3回 AIエージェント\\n\\n## この回のねらい\\n\\n- AIエージェントの基本構造が「モデル＋ループ＋ツール」であることを理解する\\n- Pydantic AIで、ツールを使う学習支援エージェントを自分で作り、動かす\\n\\n## 要点\\n\\n1. **エージェントとは**：LLMがツールを呼び出し、結果を見て次の行動を決めるループで目的を達成するシステム。\\n2. **ツール**：モデルはツールの名前・説明文・引数の型を見て呼び出しを依頼し、実行はプログラム側が行う。説明文の書き方で挙動が変わる。\\n3. **エージェントループのコスト**：1つの質問でLLMを複数回呼ぶため、応答時間・料金・レート制限への影響が大きい。\\n4. **ハーネス**：Clau"
+          }
+        ],
+        "usage_events": 2,
+        "token_totals_event_sum": {
+          "prompt_tokens": 1498,
+          "candidate_tokens": 214,
+          "total_tokens": 1712
+        },
+        "usage_note": "ADK usage_events is not proven equivalent to Pydantic AI requests.",
+        "evaluation": {
+          "tool_coverage": true,
+          "phrase_check": true,
+          "needs_human_review": true
+        },
+        "retry_count": 0,
+        "retry_errors": []
+      }
+    }
+  ],
+  "limitations": [
+    "Model sampling and backend scheduling may differ.",
+    "ADK usage_events is not a verified request-count equivalent.",
+    "Automatic tool/keyword metrics are not semantic correctness.",
+    "Agent framework versions may change; record package versions."
+  ],
+  "summary": {
+    "paired_attempts": 4,
+    "paired_both_succeeded": 4,
+    "frameworks": {
+      "pydantic_ai": {
+        "attempts": 4,
+        "succeeded": 4,
+        "failed": 0,
+        "required_tool_ok": 4,
+        "required_tool_denominator": 4,
+        "lexical_checks_ok": 3,
+        "lexical_checks_denominator": 3,
+        "tool_call_counts": {
+          "get_lecture_summary": 1,
+          "make_quiz": 1,
+          "search_glossary": 3
+        },
+        "latencies_s": [
+          1.866,
+          1.907,
+          1.659,
+          2.189
+        ],
+        "note": "Lexical checks only; not semantic correctness or hallucination rate."
+      },
+      "google_adk": {
+        "attempts": 4,
+        "succeeded": 4,
+        "failed": 0,
+        "required_tool_ok": 4,
+        "required_tool_denominator": 4,
+        "lexical_checks_ok": 3,
+        "lexical_checks_denominator": 3,
+        "tool_call_counts": {
+          "get_lecture_summary": 1,
+          "make_quiz": 1,
+          "search_glossary": 3
+        },
+        "latencies_s": [
+          3.065,
+          1.683,
+          2.048,
+          2.108
+        ],
+        "note": "Lexical checks only; not semantic correctness or hallucination rate."
+      }
+    }
+  }
+}
