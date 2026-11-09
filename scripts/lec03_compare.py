@@ -94,7 +94,7 @@ def extract_pydantic(result: Any) -> dict[str, Any]:
                 item = {"tool": part.tool_name, "preview": str(part.content)[:350]}
                 returns.append(item)
                 ordered.append({"kind": "tool_return", **item})
-    usage = result.usage()
+    usage = result.usage
     return {"answer": str(result.output), "tool_calls": calls, "tool_returns": returns,
             "trace": ordered, "llm_requests": safe_jsonable(usage.requests)}
 
@@ -134,11 +134,11 @@ def extract_adk_events(events: list[Any]) -> dict[str, Any]:
             "usage_note": "ADK usage_events is not proven equivalent to Pydantic AI requests."}
 
 
-def pydantic_run(question: str) -> dict[str, Any]:
+async def pydantic_run(question: str) -> dict[str, Any]:
     from app.agent import agent, build_model
     started = time.perf_counter()
     try:
-        obj = extract_pydantic(agent.run_sync(question, model=build_model()))
+        obj = extract_pydantic(await agent.run(question, model=build_model()))
         return {"ok": bool(obj["answer"].strip()), "seconds": round(time.perf_counter() - started, 3), **obj}
     except Exception as exc:
         return {"ok": False, "seconds": round(time.perf_counter() - started, 3), **mask_exception(exc)}
@@ -156,11 +156,13 @@ async def adk_run(question: str) -> dict[str, Any]:
         session = await service.create_session(app_name="aie2026_lec03", user_id="comparison")
         runner = Runner(agent=root_agent, app_name="aie2026_lec03", session_service=service)
         events = []
-        async for event in runner.run_async(
-            user_id="comparison", session_id=session.id,
-            new_message=types.Content(role="user", parts=[types.Part(text=question)]),
-        ):
-            events.append(event)
+        # Release runner-managed resources before the event loop closes.
+        async with runner:
+            async for event in runner.run_async(
+                user_id="comparison", session_id=session.id,
+                new_message=types.Content(role="user", parts=[types.Part(text=question)]),
+            ):
+                events.append(event)
         obj = extract_adk_events(events)
         return {"ok": bool(obj["answer"].strip()), "seconds": round(time.perf_counter() - started, 3), **obj}
     except Exception as exc:
@@ -326,7 +328,7 @@ def publish() -> None:
     if branch != "lec03" or not (remote.endswith("mathkumamoto2/lecture-ai-engineering-2026.git") or
                                     remote.endswith("mathkumamoto2/lecture-ai-engineering-2026")):
         raise RuntimeError("PRの誤提出を防ぐため停止: origin と lec03 ブランチを確認してください")
-    stage = ["lectures/03/answer.md", "lectures/03/evidence/comparison.json",
+    stage = ["scripts/lec03_compare.py", "lectures/03/answer.md", "lectures/03/evidence/comparison.json",
              "lectures/03/evidence/comparison_report.md", "lectures/03/evidence/human_review.csv"]
     stage += [str(p.relative_to(ROOT)) for p in
               (OUT_DIR / "comparison_quick.json", OUT_DIR / "comparison_quick_report.md",
@@ -339,18 +341,24 @@ def publish() -> None:
     print("[PR] https://github.com/mathkumamoto2/lecture-ai-engineering-2026/compare/main...lec03?expand=1")
 
 
-def main() -> int:
+async def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--mode", choices=("quick", "full"), default="quick")
     parser.add_argument("--repeat", type=int, default=1, help="1〜5回、同じ質問を独立セッションで反復")
     parser.add_argument("--pause", type=float, default=12.0, help="フレームワーク間のAPI間隔（秒）")
     parser.add_argument("--resume", action="store_true", help="同じ計画を再開。失敗ペアは再測定")
+    parser.add_argument("--retries", type=int, default=2, help="HTTP 503の追加再試行回数（0〜4）")
+    parser.add_argument("--retry-base", type=float, default=8.0, help="503再試行の初期間隔（秒、2倍ずつ増加）")
     parser.add_argument("--publish", action="store_true", help="全ペア成功時のみ測定結果をGitへPush")
     args = parser.parse_args()
     if not 1 <= args.repeat <= 5:
         parser.error("--repeat must be 1..5")
     if not 0 <= args.pause <= 120:
         parser.error("--pause must be 0..120")
+    if not 0 <= args.retries <= 4:
+        parser.error("--retries must be 0..4")
+    if not 0 <= args.retry_base <= 120:
+        parser.error("--retry-base must be 0..120")
     if not os.environ.get("GEMINI_API_KEY"):
         parser.error("Codespaces secret GEMINI_API_KEY が見つかりません。内容は表示しないでください")
     if (os.environ.get("GOOGLE_GENAI_USE_VERTEXAI", "").lower() in {"true", "1"}
@@ -358,7 +366,9 @@ def main() -> int:
         parser.error("Google Cloud/VertexAI設定を無効にして、両者で同じAI Studioキーを使ってください")
     if os.environ.get("GOOGLE_API_KEY") and os.environ["GOOGLE_API_KEY"] != os.environ["GEMINI_API_KEY"]:
         parser.error("GOOGLE_API_KEYとGEMINI_API_KEYが異なります。キーを表示せず設定を統一してください")
-    os.environ.setdefault("GOOGLE_API_KEY", os.environ["GEMINI_API_KEY"])
+    # google-genai prefers GOOGLE_API_KEY over GEMINI_API_KEY. Keep only the
+    # configured course key so both frameworks authenticate the same way.
+    os.environ.pop("GOOGLE_API_KEY", None)
     global RESULT_PATH, REPORT_PATH, REVIEW_PATH
     if args.mode == "quick":
         RESULT_PATH = OUT_DIR / "comparison_quick.json"
@@ -385,7 +395,8 @@ def main() -> int:
         parser.error("ADK側の登録ツールと講座の共通Python関数が一致しません")
     cases = select_cases(args.mode)
     plan = {"mode": args.mode, "repeat": args.repeat, "case_ids": [c["id"] for c in cases],
-            "alternating_order": True, "pause_seconds": args.pause}
+            "alternating_order": True, "pause_seconds": args.pause,
+            "http_503_max_extra_retries": args.retries, "http_503_retry_base_seconds": args.retry_base}
     if RESULT_PATH.exists():
         if not args.resume:
             parser.error("既存の比較結果があります。上書き防止のため --resume を指定してください")
@@ -405,34 +416,77 @@ def main() -> int:
         for case in cases:
             key = (case["id"], repeat)
             prev_index = indexes.get(key)
-            if prev_index is not None and all(data["records"][prev_index][fw].get("ok") for fw in ("pydantic_ai", "google_adk")):
+            if prev_index is not None and all(
+                data["records"][prev_index][fw].get("ok")
+                for fw in ("pydantic_ai", "google_adk")
+            ):
                 continue
-            # Alternate the execution order, reducing systematic API congestion bias.
+            # Alternating which framework goes first reduces order bias.
             order = ("pydantic_ai", "google_adk") if (repeat + cases.index(case)) % 2 else ("google_adk", "pydantic_ai")
-            print(f"[{len(data['records'])+1 if prev_index is None else prev_index+1}/{total}] {case['id']} (repeat={repeat}, first={order[0]})", flush=True)
-            record: dict[str, Any] = {"case_id": case["id"], "category": case["category"],
-                                      "repeat": repeat, "question": case["question"],
-                                      "required_tools": case["required_tools"],
-                                      "check_terms": case["check_terms"], "order": list(order)}
-            for i, framework in enumerate(order):
-                if i and args.pause:
-                    time.sleep(args.pause)
-                answer = pydantic_run(case["question"]) if framework == "pydantic_ai" else asyncio.run(adk_run(case["question"]))
-                answer["evaluation"] = evaluate_response(case, answer)
-                record[framework] = answer
-                print(f"  {framework}: {'OK' if answer['ok'] else 'ERROR'}; tools={len(answer.get('tool_calls',[]))}", flush=True)
             if prev_index is None:
+                record: dict[str, Any] = {
+                    "case_id": case["id"], "category": case["category"],
+                    "repeat": repeat, "question": case["question"],
+                    "required_tools": case["required_tools"],
+                    "check_terms": case["check_terms"], "order": list(order),
+                    # 'pending' is not an attempted API call. An unfinished
+                    # record remains recognizable in the saved evidence.
+                    "pydantic_ai": {"ok": False, "seconds": 0.0, "error_type": "pending"},
+                    "google_adk": {"ok": False, "seconds": 0.0, "error_type": "pending"},
+                }
                 data["records"].append(record)
                 indexes[key] = len(data["records"]) - 1
             else:
-                data["records"][prev_index] = record
-            write_evidence(data)
-            if any(is_rate_limit(record[framework]) for framework in order):
-                print("[停止] 429レート制限です。結果保存済み。枠回復後に同じ条件で --resume を付けて実行してください")
-                interrupted = True
+                record = data["records"][prev_index]
+            print(f"[{indexes[key]+1}/{total}] {case['id']} (repeat={repeat}, first={order[0]})", flush=True)
+            attempted_this_pair = 0
+            for framework in order:
+                if record[framework].get("ok"):
+                    print(f"  {framework}: SKIP (既存の成功結果を維持)", flush=True)
+                    continue
+                if attempted_this_pair and args.pause:
+                    await asyncio.sleep(args.pause)
+                # 503 is a transient server overload, not a quality metric.
+                # A limited backoff avoids interpreting a transient failure as an
+                # agent failure. Every attempted API call is durably recorded.
+                retry_errors = []
+                for retry_number in range(args.retries + 1):
+                    answer = (await pydantic_run(case["question"]) if framework == "pydantic_ai"
+                              else await adk_run(case["question"]))
+                    answer["evaluation"] = evaluate_response(case, answer)
+                    answer["retry_count"] = retry_number
+                    answer["retry_errors"] = list(retry_errors)
+                    # `seconds` measures only the *final* attempt, not the
+                    # cumulative time across failed attempts and backoff.
+                    # Runs with retries should not be naively used for
+                    # framework latency comparisons without qualification.
+                    record[framework] = answer
+                    write_evidence(data)
+                    if answer["ok"] or str(answer.get("http_status")) != "503" or retry_number >= args.retries:
+                        break
+                    retry_errors.append({
+                        "error_type": answer.get("error_type"),
+                        "http_status": answer.get("http_status"),
+                        "error_message": answer.get("error_message"),
+                        "seconds": answer.get("seconds"),
+                    })
+                    delay = min(120.0, args.retry_base * (2 ** retry_number))
+                    print(f"  {framework}: HTTP 503 一時的混雑。{delay:g}秒後に再試行 "
+                          f"({retry_number + 1}/{args.retries})", flush=True)
+                    await asyncio.sleep(delay)
+                attempted_this_pair += 1
+                print(f"  {framework}: {'OK' if answer['ok'] else 'ERROR'}; "
+                      f"tools={len(answer.get('tool_calls', []))}; 503_retries={answer['retry_count']}", flush=True)
+                if not answer["ok"]:
+                    reason = answer.get("error_message", "")
+                    print(f"  [原因] {answer.get('error_type', 'unknown')} HTTP={answer.get('http_status')} {reason[:320]}", flush=True)
+                    print("[停止] APIエラーを記録しました。原因を解消した後、--resume で再開してください。", flush=True)
+                    interrupted = True
+                    break
+            if interrupted:
                 break
             if args.pause:
-                time.sleep(args.pause)
+                await asyncio.sleep(args.pause)
         if interrupted:
             break
     complete = len(data["records"]) == total and all(
@@ -452,7 +506,7 @@ def main() -> int:
 
 if __name__ == "__main__":
     try:
-        raise SystemExit(main())
+        raise SystemExit(asyncio.run(main()))
     except (RuntimeError, OSError, ValueError) as exc:
         print(f"[停止] {exc}", file=sys.stderr)
         raise SystemExit(1)

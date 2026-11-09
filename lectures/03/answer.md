@@ -36,10 +36,10 @@
 ### 比較結果（実測値のみを自動追記）
 
 <!-- LEC03_EVIDENCE_BEGIN -->
-
-- Gemini APIを利用した比較実験は**未実行**。この欄の数値は実験完了後に更新する。
-- 実行コマンド：`uv run --with 'google-adk>=2,<3' python scripts/lec03_compare.py --mode full --repeat 2 --pause 12 --publish`
-
+- 比較条件：`gemini-3.5-flash-lite`、同一の指示・ツール、独立したセッション。
+- ペア実験：16/16件で両方式が成功。
+- 結果の詳細：`lectures/03/evidence/comparison_report.md` と `comparison.json`。
+- 判定上の注意：ツール利用の成否と、回答の意味的正確性を区別した。後者の独立した人手確認は未実施。
 <!-- LEC03_EVIDENCE_END -->
 
 ### 考察と限界
