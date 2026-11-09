@@ -130,7 +130,7 @@ def test_pydantic_extractor_observes_calls(monkeypatch):
     monkeypatch.setitem(sys.modules, "pydantic_ai", types.ModuleType("pydantic_ai"))
     monkeypatch.setitem(sys.modules, "pydantic_ai.messages", module)
     messages = [SimpleNamespace(parts=[ToolCallPart("make_quiz", {"lecture": 2}), ToolReturnPart("make_quiz", "done")])]
-    fake = SimpleNamespace(all_messages=lambda: messages, usage=lambda: SimpleNamespace(requests=2), output="question")
+    fake = SimpleNamespace(all_messages=lambda: messages, usage=SimpleNamespace(requests=2), output="question")
     result = extract_pydantic(fake)
     assert result["llm_requests"] == 2
     assert result["tool_calls"][0]["tool"] == "make_quiz"
