@@ -1,90 +1,117 @@
-# AIE2026 演習・宿題リポジトリ
+# AIE2026 — LLM・AIエージェントの実装と評価
 
-AIエンジニアリング実践講座（AIE2026）の演習と宿題で使うリポジトリです。
-講座を通して、**AIエンジニアリングの学習を支援するエージェント**を少しずつ育てていきます。
+東京大学 松尾・岩澤研究室「AIエンジニアリング実践講座 2026」の教材をもとに、LLMの応答特性、LoRAによる追加学習、検索ツールを利用するAIエージェントについて実装・比較評価した記録です。
 
-## 想定する環境
+単にプログラムが動作することだけでなく、**実験条件の統一、失敗事例の分析、評価指標の妥当性、結果の再現可能性**を重視しています。
 
-演習は **ブラウザだけで** 進められるように作っています。自分の PC への導入は不要です。
+> 本リポジトリは講座教材をforkして作成した個人の演習・発展課題の成果物です。講座の公式リポジトリではありません。元の教材は [matsuolab/lecture-ai-engineering-2026](https://github.com/matsuolab/lecture-ai-engineering-2026) を参照してください。
 
-| 使うもの | 用途 | 注意 |
-|---|---|---|
-| GitHub の **個人** アカウント | このリポジトリを fork し、作業ブランチと PR で提出する | 会社や学校が管理するアカウントでは Codespaces・Copilot が制限されることがあります |
-| GitHub Codespaces | 第1・3・5回などの開発環境。`.devcontainer/` の設定で Python 3.12・uv・Node.js が入ったコンテナが自動で用意されます | 個人アカウントの無料枠は月 120 コア時間（2 コアで約 60 時間）。**使い終わったら停止**してください |
-| GitHub Copilot（Free でよい） | コードの補完とチャット。第5回の発展課題では MCP クライアントとしても使います | Free は補完・チャットの回数に月の上限があります |
-| Gemini API（Google AI Studio の無料枠） | LLM の呼び出し。**個人**の Google アカウントでキーを発行し、Codespaces secret `GEMINI_API_KEY` で渡します | 無料枠には 1 分あたり・1 日あたりの上限があります（下の「前提と制約」） |
-| Google Colab（T4 GPU、無料枠） | 第2回の LoRA 学習だけに使います | GPU の利用時間に上限があります。終わったらランタイムを削除してください |
+## 取り組みの概要
 
-自分の PC で動かす場合は、Python 3.12 と [uv](https://docs.astral.sh/uv/) を入れて `uv sync --frozen` を実行し、環境変数 `GEMINI_API_KEY` を設定してください。
+| 回 | テーマ | 主な取り組み | 実験結果・詳細 |
+| --- | --- | --- | --- |
+| 第1回 | LLM APIの利用・評価 | Gemini APIの応答時間、トークン消費、回答品質を比較 | [第1回の提出PR #1](https://github.com/mathkumamoto2/lecture-ai-engineering-2026/pull/1) |
+| 第2回 | LoRA・SFTと検索方式 | 講座用語集58件を用いた追加学習と、出典参照方式を比較 | [第2回の提出PR #2](https://github.com/mathkumamoto2/lecture-ai-engineering-2026/pull/2) |
+| 第3回 | AIエージェントとツール呼び出し | Pydantic AIとGoogle ADKで同一の学習支援エージェントを構築・比較 | [第3回の技術報告](lectures/03/answer.md) |
 
-## はじめに（第1回）
+### 第1回：LLMの応答特性
 
-1. このリポジトリを自分のアカウントに **fork** する
-2. [Google AI Studio](https://aistudio.google.com/apikey) で Gemini API キーを作る
-3. GitHub の **Settings → Codespaces → Secrets** に `GEMINI_API_KEY` を登録し、使う repository に自分の fork を選ぶ
-4. 自分の fork で **Code → Codespaces → Create codespace on main**
-5. ターミナルで動作確認
+複数モデル・質問条件に対して計54回のAPI呼び出しを試み、44回が成功、10回がAPIエラーとなりました。応答時間、トークン使用量、参照資料の有無による回答の違いを記録しています。回答品質の判定はAIによる一次評価であり、独立した人手採点ではありません。
+
+### 第2回：LoRAによる追加学習と検索
+
+講座用語集58件からSFTデータを構築し、`Qwen/Qwen3.5-0.8B` にLoRAを適用しました。独自の32問で学習前後を評価したところ、JSON形式遵守率は **32/32 → 29/32**、`needs_review` 判定一致は **23/32 → 24/32** でした。
+
+追加学習がすべての指標を改善するとは限らないため、検索・生成・出典検証を分離した方式についても検討・評価しました。検索方式による最終出典一致にはプログラムによるフォールバックが含まれるため、LLM単体の正答率とは区別しています。
+
+### 第3回：Pydantic AIとGoogle ADKの比較
+
+講座用語集を利用する学習支援エージェントを、Pydantic AIとGoogle ADKの2方式で構築しました。モデル、指示文、Pythonツール、質問を共通化し、**8種類の質問を各2回、両方式で計32回**実行しました。
+
+| 指標 | Pydantic AI | Google ADK |
+| --- | ---: | ---: |
+| 実行成功 | 16/16 | 16/16 |
+| 期待するツールの呼び出し | 16/16 | 16/16 |
+| `search_glossary` 呼び出し総数 | 13 | 10 |
+| `get_lecture_summary` 呼び出し総数 | 4 | 4 |
+| `make_quiz` 呼び出し総数 | 4 | 4 |
+| 応答時間の中央値 | 1.98秒 | 1.61秒 |
+
+実験環境：Python 3.12.16、Pydantic AI 2.57.0、Google ADK 2.14.0、`gemini-3.5-flash-lite`。
+
+両方式とも必要なツールを呼び出せた一方、検索回数と回答内容には差が見られました。例えば「RAGとは？」への応答では、Pydantic AI側で検索語の展開と再検索が発生しました。なお、**ツール呼び出し成功率や文字列検査の結果は、回答の意味的正答率を表しません**。応答時間の差も、少数試行からフレームワーク全般の優劣を示すものではありません。
+
+実測ログ、回答原文、ツール呼び出し履歴、評価基準および限界は [第3回の比較レポート](lectures/03/evidence/comparison_report.md) と [実測JSON](lectures/03/evidence/comparison.json) に記録しています。
+
+## システム構成
+
+```mermaid
+flowchart TD
+    Q[利用者の質問] --> A{エージェント実装}
+    A --> P[Pydantic AI]
+    A --> D[Google ADK]
+    P --> M[Gemini API]
+    D --> M
+    M --> T[Pythonツール]
+    T --> G[search_glossary]
+    T --> L[get_lecture_summary]
+    T --> Z[make_quiz]
+    G --> J[data/glossary.json]
+    L --> K[data/lectures/]
+    Z --> J
+    T --> M
+    M --> O[回答]
+```
+
+2方式で共通の `INSTRUCTIONS` とツール関数を利用し、フレームワークの違いによる挙動を比較します。
+
+### 主要ファイル
+
+| パス | 役割 |
+| --- | --- |
+| [`app/agent.py`](app/agent.py) | Pydantic AI版エージェント、共通指示、実行CLI |
+| [`app/tools.py`](app/tools.py) | 用語集検索・講義要約・確認問題のツール実装 |
+| [`adk_agent/glossary_agent/agent.py`](adk_agent/glossary_agent/agent.py) | Google ADK版エージェント |
+| [`scripts/lec03_compare.py`](scripts/lec03_compare.py) | 両方式の実測、ログ保存、途中再開 |
+| [`scripts/lec03_eval.py`](scripts/lec03_eval.py) | 評価ケース・集計ロジック |
+| [`lectures/03/answer.md`](lectures/03/answer.md) | 第3回の実装、結果、考察をまとめた報告 |
+| [`lectures/03/evidence/`](lectures/03/evidence/) | 比較データ、回答原文、人手評価用シート |
+| [`tests/`](tests/) | ツールと評価処理のオフラインテスト |
+
+## 実行環境と検証
+
+Python 3.12と[`uv`](https://docs.astral.sh/uv/)を使用します。LLMを利用する機能にはGoogle AI StudioのAPIキーを環境変数 `GEMINI_API_KEY` として設定する必要があります。APIキーはリポジトリ内に保存しません。
+
+依存関係のセットアップとオフラインテスト：
 
 ```bash
+uv sync --frozen
 uv run pytest -q
-uv run python -m app.ask "LoRAとは何ですか？"
 ```
 
-詳しい手順は [lectures/01/problem.md](lectures/01/problem.md) を見てください。
-
-## 構成
-
-```
-.devcontainer/   Codespaces の環境定義（Python 3.12、uv、Node.js。起動時に uv sync --frozen）
-.github/workflows/test.yml  PR ごとにテストを実行（fork では Actions タブで有効化が必要）
-app/
-  config.py      モデル名とAPIキーの読み込み
-  ask.py         第1回：LLMに質問する
-  tools.py       第3回：エージェントのツール（用語集の検索など）
-  agent.py       第3回：Pydantic AI の学習支援エージェント（第5回：--mcp で MCP 経由）
-  mcp_server.py  第5回：用語集を公開する MCP サーバー
-  mcp_servers.json 第5回：使う MCP サーバーの設定（mcpServers 形式）
-data/
-  glossary.json  講座の用語集
-  lectures/      各回の要点
-lectures/NN/
-  problem.md     その回の演習と宿題
-  answer.md      あなたが記入して提出するファイル
-notebooks/       第2回：Google Colab で動かす LoRA のノートブック（lora_format_tuning.ipynb）
-scripts/         補助スクリプト
-tests/           テスト（APIキー不要）
-pyproject.toml / uv.lock  依存パッケージとその固定版
-```
-
-## 提出のしかた
-
-1. 回ごとに作業ブランチを作る（例：`git switch -c lec01`）
-2. 演習・宿題を行い、`lectures/NN/answer.md` に記入する
-3. push して、**自分の fork の中で** 作業ブランチ → `main` の PR を作る
-
-宿題は「基礎・実装・発展」の3レベルがあり、どれか1つに取り組めば完了です。
-
-## 前提と制約
-
-- **依存パッケージの版は固定**しています（`uv.lock`。Python 3.12、pydantic-ai-slim 2.57.0、google-genai 2.31.0）。講座の期間中は上げません。`uv sync --frozen` でそのまま入れてください。
-- **既定のモデルは `gemini-3.5-flash-lite`** です。環境変数 `AIE_MODEL` で切り替えられます（下の「モデルの切り替え」）。ほかのモデルや自前契約の API を使ってもかまいません
-- **Gemini API の無料枠にはレート制限**があります。エージェント（第3回以降）は 1 つの質問で LLM を複数回呼ぶので、第1回より早く上限に達します。`レート制限に達しました` と出たら 1 分ほど待ってください。`モデルが混み合っています（503）` が続くときは `AIE_MODEL=gemini-3.1-flash-lite` を試してください
-- **API キーは環境変数 `GEMINI_API_KEY` だけ**で渡します。コード・コミット・チャットに貼らないでください。漏れたら AI Studio で削除して作り直します
-- Codespaces からインターネットへは出られますが、外から Codespaces の中へは接続できません（ポート転送は既定で非公開）。第5回の MCP サーバーは Codespaces の中で動かします
-- テスト（`uv run pytest -q`）は API キーなしで動きます（LLM を呼ばない TestModel を使用）
-
-## 守ってほしいこと
-
-- **APIキーをコードやコミットに書かない。** Codespaces secret で渡します
-- **使い終わったら Codespaces を停止する。** 無料枠を使い切ると起動できなくなります
-- AIツール（Copilot など）は使ってかまいません。提案されたコードは、読んで理解してから採用してください
-
-## モデルの切り替え
-
-既定モデルは `gemini-3.5-flash-lite` です。環境変数 `AIE_MODEL` で切り替えられます。
+Pydantic AI版の実行例：
 
 ```bash
-AIE_MODEL=gemini-3.5-flash uv run python -m app.ask "LoRAとは何ですか？"
+uv run python -m app.agent --trace "LoRAとQLoRAの違いは？"
 ```
 
-無料枠には1分あたり・1日あたりのリクエスト上限があります。上限は [Gemini API のレート制限のページ](https://ai.google.dev/gemini-api/docs/rate-limits) で確認してください。
+Google ADK版の対話実行例：
+
+```bash
+PYTHONPATH=. uv run --with 'google-adk>=2,<3' adk run adk_agent/glossary_agent
+```
+
+比較実験の実行条件と結果の保存方法は [`scripts/lec03_compare.py`](scripts/lec03_compare.py) と [第3回の技術報告](lectures/03/answer.md) に記載しています。既存の記録がある場合、比較スクリプトは不用意な上書きを防ぐため、実験計画の一致と `--resume` の指定を確認します。
+
+## 評価上の留意点
+
+- **動作成功と内容の正確性は異なります。** ツールが適切に呼ばれても、最終回答の根拠への忠実性は別途評価する必要があります。
+- **人手評価は未完了です。** 第3回の `human_review.csv` は評価用の記録欄であり、人手採点済みのデータではありません。
+- **比較条件には制約があります。** 共通のモデルID・指示・ツールを使用しましたが、SDK内部の生成設定やAPI負荷は完全には統制できません。
+- **結果の一般化には限界があります。** 第2回は単一seed、第3回は各条件2反復の実験です。統計的な優位性や実運用での性能を保証するものではありません。
+
+## 関連資料
+
+- [AIE2026 講座教材（上流リポジトリ）](https://github.com/matsuolab/lecture-ai-engineering-2026)
+- [Pydantic AI ドキュメント](https://ai.pydantic.dev/)
+- [Google ADK ドキュメント](https://adk.dev/)
